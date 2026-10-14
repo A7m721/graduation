@@ -313,10 +313,213 @@
       0% { opacity: 0; transform: translate(-50%, 20px); }
       100% { opacity: 1; transform: translate(-50%, 0); }
     }
+
+
+    /* Responsive layout for phones and small tablets */
+    html, body, #captureArea {
+      min-height: 100%;
+      min-height: 100dvh;
+    }
+
+    @media (max-width: 600px) {
+      html, body {
+        width: 100%;
+        height: 100%;
+        height: 100dvh;
+        overflow: hidden;
+      }
+
+      #captureArea {
+        width: 100%;
+        height: 100%;
+        height: 100dvh;
+      }
+
+      .top-controls {
+        top: max(10px, env(safe-area-inset-top));
+        left: 10px;
+        right: 10px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 7px;
+      }
+
+      .ctrl-btn {
+        padding: 8px 11px;
+        font-size: 12px;
+        gap: 5px;
+        white-space: nowrap;
+      }
+
+      .ano_novo {
+        padding: 0;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .ano_novo > span {
+        font-size: clamp(58px, 19vw, 105px);
+        line-height: 1;
+      }
+
+      /* Keep the year itself centered as a complete 2027 on phones. */
+      .ano_novo > span.num {
+        position: absolute;
+        left: 50%;
+        right: auto;
+        margin: 0;
+        transform: translateX(-100%);
+        white-space: nowrap;
+      }
+
+      span.seis {
+        top: 50%;
+        right: 50%;
+        margin-right: clamp(-82px, -16vw, -55px);
+      }
+
+      span.sete {
+        right: 50%;
+        margin-right: clamp(-82px, -16vw, -55px);
+      }
+
+      @keyframes vem_2017 {
+        0% { right: 50%; margin-right: -140px; }
+        66.6666% { right: 50%; margin-right: -82px; }
+        90% { right: 50%; margin-right: -82px; }
+        100% { right: 50%; margin-right: -55px; }
+      }
+
+      .feliz {
+        top: 36%;
+        padding: 0 12px;
+        font-size: clamp(22px, 7vw, 36px);
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+      }
+
+      @keyframes vem_feliz {
+        0% { margin-top: 0; opacity: 0; }
+        100% { margin-top: -100px; opacity: 1; }
+      }
+
+      .cap {
+        transform: translateX(-50%) rotate(25deg) scale(.65);
+        transform-origin: top center;
+      }
+
+      @keyframes drop_cap {
+        0% { top: -160px; opacity: 0; transform: translateX(-50%) rotate(25deg) scale(.65); }
+        40% { opacity: 1; }
+        100% { top: -35px; opacity: 1; transform: translateX(-50%) rotate(-12deg) scale(.65); }
+      }
+
+      .card-container {
+        bottom: max(52px, calc(env(safe-area-inset-bottom) + 34px));
+        width: calc(100% - 28px);
+        max-width: 420px;
+      }
+
+      .name-input {
+        width: 100%;
+        max-width: 100%;
+        padding: 11px 12px;
+        font-size: 16px;
+      }
+
+      .quote-text {
+        margin-top: 9px;
+        font-size: 12px;
+        line-height: 1.45;
+        padding: 0 4px;
+      }
+
+      .ecg-container {
+        bottom: max(5px, env(safe-area-inset-bottom));
+        height: 32px;
+      }
+
+      .ecg-line {
+        stroke-width: 4;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .ctrl-btn {
+        padding: 7px 9px;
+        font-size: 11px;
+      }
+
+      .ano_novo > span {
+        font-size: 58px;
+      }
+
+      .card-container {
+        bottom: max(45px, calc(env(safe-area-inset-bottom) + 28px));
+      }
+    }
+
+
+    /* Intro screen: nursing graduation identity */
+    #introScreen {
+      position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center;
+      padding: max(18px, env(safe-area-inset-top)) 18px max(18px, env(safe-area-inset-bottom));
+      overflow: hidden; color: #fff; text-align: center;
+      background: radial-gradient(circle at 50% 38%, rgba(99, 59, 160, .38), transparent 38%),
+                  radial-gradient(circle at 15% 85%, rgba(0, 229, 255, .10), transparent 28%), #090817;
+      transition: opacity .7s ease, visibility .7s ease;
+    }
+    #introScreen.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .intro-glow { position:absolute; width: min(72vw, 360px); aspect-ratio:1; border-radius:50%;
+      background: rgba(204, 61, 255, .14); filter: blur(55px); animation: introPulse 3s ease-in-out infinite alternate; }
+    .intro-card { position:relative; width:min(100%, 440px); padding: clamp(26px, 6vw, 42px) 22px 28px;
+      border:1px solid rgba(255,255,255,.16); border-radius:30px;
+      background:rgba(255,255,255,.055); box-shadow:0 20px 70px rgba(0,0,0,.32), inset 0 1px rgba(255,255,255,.08);
+      backdrop-filter:blur(14px); animation: introRise .9s cubic-bezier(.2,.8,.2,1) both; }
+    .intro-badge { display:inline-block; padding:9px 17px; border-radius:999px; font:700 13px/1.4 'Cairo',sans-serif;
+      background:linear-gradient(110deg,#e84ba9,#8d39d8); box-shadow:0 0 28px rgba(207,65,225,.3); }
+    .intro-emblem { width:clamp(110px, 31vw, 150px); height:clamp(110px, 31vw, 150px); margin:22px auto 18px;
+      display:grid; place-items:center; position:relative; border-radius:38px;
+      background:linear-gradient(145deg,rgba(234,83,197,.22),rgba(91,81,210,.16));
+      border:1px solid rgba(255,255,255,.16); box-shadow:0 0 45px rgba(186,71,255,.18); }
+    .intro-emblem:before { content:''; position:absolute; inset:10px; border:1px solid rgba(255,255,255,.12); border-radius:30px; }
+    .intro-icon { font-size:clamp(58px, 16vw, 82px); filter:drop-shadow(0 0 18px rgba(0,229,255,.32)); animation: introFloat 2.6s ease-in-out infinite; }
+    .intro-year { margin:8px 0 0; font:800 clamp(38px, 11vw, 56px)/1.1 'Montserrat','Cairo',sans-serif; letter-spacing:3px;
+      background:linear-gradient(90deg,#f3a4ff,#fff,#76eaff); color:transparent; background-clip:text; -webkit-background-clip:text; }
+    .intro-title { margin:12px 0 7px; font:800 clamp(19px, 5.3vw, 25px)/1.4 'Cairo',sans-serif; }
+    .intro-subtitle { color:#d4cde5; font:500 clamp(13px, 3.7vw, 15px)/1.8 'Cairo',sans-serif; }
+    .intro-actions { display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:10px; margin-top:23px; }
+    .intro-enter, .intro-skip { min-height:46px; border-radius:999px; padding:11px 22px; font:700 14px 'Cairo',sans-serif; cursor:pointer; }
+    .intro-enter { color:#fff; border:0; background:linear-gradient(100deg,#e94cab,#a52bce); box-shadow:0 7px 25px rgba(207,55,207,.28); }
+    .intro-skip { color:#eee8f6; border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.05); }
+    .intro-enter:active, .intro-skip:active { transform:scale(.97); }
+    .intro-foot { margin-top:17px; color:#a9a0bb; font:400 11px 'Cairo',sans-serif; }
+    @keyframes introRise { from { opacity:0; transform:translateY(22px) scale(.97); } to { opacity:1; transform:translateY(0) scale(1); } }
+    @keyframes introFloat { 0%,100% { transform:translateY(0) rotate(-3deg); } 50% { transform:translateY(-7px) rotate(3deg); } }
+    @keyframes introPulse { from { transform:scale(.88); opacity:.65; } to { transform:scale(1.12); opacity:1; } }
+    @media (max-width: 380px) { .intro-card { padding:24px 16px 22px; border-radius:24px; } .intro-emblem { margin:16px auto 12px; } .intro-actions { margin-top:17px; } }
+    @media (prefers-reduced-motion: reduce) { .intro-card, .intro-icon, .intro-glow { animation:none; } #introScreen { transition:none; } }
+
   </style>
 </head>
 
 <body>
+
+  <section id="introScreen" aria-label="مقدمة حفل تخرج التمريض">
+    <div class="intro-glow" aria-hidden="true"></div>
+    <div class="intro-card">
+      <div class="intro-badge">✦ لحظة تستحق الاحتفال ✦</div>
+      <div class="intro-emblem" aria-hidden="true"><span class="intro-icon">🎓</span></div>
+      <div class="intro-year">2027</div>
+      <h1 class="intro-title">NURSING GRADUATION</h1>
+      <p class="intro-subtitle">سنوات من التعب.. لحظة من الفخر<br>حكاية حلم يستحق أن يُحتفل به 🩺</p>
+      <div class="intro-actions">
+        <button class="intro-enter" type="button" onclick="enterExperience()">ابدأ الاحتفال ✨</button>
+      </div>
+      <p class="intro-foot">دفعة التمريض 2027 · بداية حكاية جديدة</p>
+    </div>
+  </section>
 
   <div id="captureArea">
     <!-- أدوات التحكم -->
@@ -355,7 +558,7 @@
     </div>
 
     <div class="card-container animate" id="cardContainer">
-      <input type="text" class="name-input" placeholder="اكتب اسم الخريج/ة هنا..." value=" ممرضة المستقبل ✨" />
+      <input type="text" class="name-input" placeholder="اكتب اسم الخريج/ة هنا..." value=" 🩺 ممرضة المستقبل ✨" />
       <p class="quote-text">"To save one life, you're a hero. To save a hundred, you're a nurse." 💖</p>
     </div>
   </div>
@@ -436,8 +639,12 @@
     const ctx = canvas.getContext('2d');
 
     function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(window.innerWidth * dpr);
+      canvas.height = Math.round(window.innerHeight * dpr);
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
@@ -527,8 +734,8 @@
 
     class FloatingItem {
       constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * -canvas.height;
+        this.x = Math.random() * window.innerWidth;
+        this.y = Math.random() * -window.innerHeight;
         this.type = Math.random() < 0.3 ? 'cap' : (Math.random() < 0.5 ? 'steth' : 'confetti');
         this.size = Math.random() * 12 + 10;
         this.color = colors[Math.floor(Math.random() * colors.length)];
@@ -542,9 +749,9 @@
         this.y += this.vy;
         this.x += this.vx;
         this.rotation += this.rotationSpeed;
-        if (this.y > canvas.height) {
+        if (this.y > window.innerHeight) {
           this.y = -30;
-          this.x = Math.random() * canvas.width;
+          this.x = Math.random() * window.innerWidth;
         }
       }
 
@@ -583,15 +790,18 @@
 
     function launchRandomRocket(targetX, targetY) {
       initAudio();
-      const startX = Math.random() * canvas.width;
-      const startY = canvas.height;
-      const tX = targetX || Math.random() * (canvas.width * 0.8) + canvas.width * 0.1;
-      const tY = targetY || Math.random() * (canvas.height * 0.5) + 50;
+      const logicalWidth = window.innerWidth;
+      const logicalHeight = window.innerHeight;
+      const startX = Math.random() * logicalWidth;
+      const startY = logicalHeight;
+      const tX = targetX || Math.random() * (logicalWidth * 0.8) + logicalWidth * 0.1;
+      const tY = targetY || Math.random() * (logicalHeight * 0.5) + 50;
       const color = colors[Math.floor(Math.random() * colors.length)];
       rockets.push(new Rocket(startX, startY, tX, tY, color));
     }
 
     window.addEventListener('pointerdown', (e) => {
+      if (!document.getElementById('introScreen').classList.contains('is-hidden')) return;
       if (!e.target.closest('.top-controls') && e.target.tagName !== 'INPUT') {
         initAudio();
         launchRandomRocket(e.clientX, e.clientY);
@@ -644,13 +854,27 @@
       startCelebration();
     }
 
-    startCelebration();
+    let experienceStarted = false;
+    function enterExperience() {
+      if (experienceStarted) return;
+      experienceStarted = true;
+      document.getElementById('introScreen').classList.add('is-hidden');
+      const elems = ['felizText', 'seisNum', 'seteNum', 'capElem', 'cardContainer'];
+      elems.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.classList.remove('animate');
+        void el.offsetWidth;
+        el.classList.add('animate');
+      });
+      startCelebration();
+    }
 
     function loop() {
       requestAnimationFrame(loop);
 
       ctx.fillStyle = 'rgba(17, 16, 41, 0.25)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
       for (let i = rockets.length - 1; i >= 0; i--) {
         rockets[i].update();
